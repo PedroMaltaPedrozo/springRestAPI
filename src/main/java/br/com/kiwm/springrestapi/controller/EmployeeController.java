@@ -3,9 +3,7 @@ package br.com.kiwm.springrestapi.controller;
 import br.com.kiwm.springrestapi.model.Employee;
 import br.com.kiwm.springrestapi.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 //@Controller
@@ -36,24 +34,23 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/{id}")
-    public String getEmployee(@PathVariable Long id) {
-        return "Fetching the employee details for the id " + id;
+    public Employee getEmployee(@PathVariable Long id) {
+        return employeeService.GetSingleEmployee(id);
     }
 
     @PostMapping("/employees")
-    public String saveEmployee(@RequestBody Employee employee) {
-        return "saving the employee details to the database" + employee;
+    public Employee saveEmployee(@RequestBody Employee employee) {
+        return employeeService.saveEmployee(employee);
     }
 
     //localhost:8080/employees?id=34
     @DeleteMapping("/employees")
-    public String deleteEmployee(@RequestParam Long id) {
-        return "Deleting the employee details for the id " + id;
+    public void deleteEmployee(@RequestParam Long id) {
+        employeeService.deleteEmployee(id);
     }
 
     @PutMapping("/employees/{id}")
     public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
-        System.out.println("updating the employee data for the id " + id);
-        return employee;
+        return  employeeService.updateEmployee(id, employee);
     }
 }
